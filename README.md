@@ -11,4 +11,9 @@ But we can do better: we can build our own DB and provide it through a REST
 interface, for example, that would allow to simply ask for a "name" in a 
 "body" and get its "location".
 
+## Data
+Data is provided by USGS through a series of WMS endpoints.
+The endpoints, organized by body name, are listed in:
+* https://astrocloud.wr.usgs.gov/dataset/data
+
 
