@@ -40,18 +40,50 @@ def write_json(geojson, filename):
     with open(filename, 'w') as fout:
         json.dump(geojson, fout)
 
-def main():
+def pull_data(body, url, outdir):
+    print("Querying", body, url)
+    geojson = query_wms(body, url)
+    filename = os.path.join(outdir, '.'.join([body,'geojson']))
+    write_json(geojson, filename)
+    return os.path.isfile(filename)
+
+def run_parallel(endpoints, outdir):
+    import multiprocessing as mp
+    d = outdir
+
+    output = mp.Queue
+    procs = [mp.Process(target=pull_data, args=(b,u,d) for b,u in endpoints]
+    for p in procs:
+        p.start()
+    for p in procs:
+        p.join()
+    results = [output.get() for p in procs]
+    return results
+
+def main(parallel=False):
     page_html = get_webpage(_URL)
     if not page_html:
         print('Deu ruim')
         return None
+
     wms_endpoints = parse_webpage(page_html)
-    for body,url in wms_endpoints:
-        print("About to query", body, url)
-        geojson = query_wms(body, url)
-        print("Query result", geojson)
-        outdir = 'data_download'
-        if not os.path.isdir(outdir):
-            os.mkdir(outdir)
-        filename = os.path.join(outdir, '.'.join([body,'geojson']))
-        write_json(geojson, filename)
+    if not wms_endpoints:
+        return None
+
+    outdir = 'data_download'
+    if not os.path.isdir(outdir):
+        os.mkdir(outdir)
+
+    if parallel:
+        results = run_parallel(wms_endpoints, outdir)
+    else:
+        results = [pull_data(body, url, outdir) for body,url in wms_endpoints]
+
+
+
+if __name__ == "__main__":
+    import sys
+    if sys.argv[1]:
+        msg = "{!s} will download all WMS (GeoJSON) features from {!s}".format(_URL)
+        sys.exit(0)
+    main()
