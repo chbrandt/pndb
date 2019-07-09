@@ -6,7 +6,7 @@ def normalize_coordinates(lon, lat):
     assert -180<=lon<=360, "Expected longitude in [-180:360], got {!s} instead".format(lon)
     if lon > 180:
         lon -= 360
-    return [lon, lat]
+    return [round(lon,3), round(lat,3)]
 
 def normalize_string(word):
     return word.lower()
