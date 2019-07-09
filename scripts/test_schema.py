@@ -1,10 +1,20 @@
 from jsonschema import validate
 import json
 
-with open('schema.json', 'r') as fp:
-    schema = json.load(fp)
-with open('example_collection.json', 'r') as fp:
-    example = json.load(fp)
+def _read_json(filename):
+    with open(filename, 'r') as fp:
+        js = json.load(fp)
+    return js
 
-def test_schema():
-    validate(instance=example, schema=schema)
+schema = _read_json('schema.json')
+
+def test_schema(json_filename='example_collection.json'):
+    sample = _read_json(json_filename)
+    validate(instance=sample, schema=schema)
+    return True
+
+
+if __name__ == "__main__":
+    import sys
+    assert len(sys.argv) > 1, "You're supposed to give a json filename as argument"
+    test_schema(sys.argv[1])
