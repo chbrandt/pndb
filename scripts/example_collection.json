@@ -1,0 +1,13 @@
+{
+    "body":  "deimos",
+    "locations": [
+        {
+            "name":  "swift",
+            "coordinates":  [1.8, 12.5]
+        },
+        {
+            "name":  "voltaire",
+            "coordinates":  [356.5, 20]
+        }
+    ]
+}
