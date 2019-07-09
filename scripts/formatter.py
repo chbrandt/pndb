@@ -3,7 +3,7 @@ import geopandas as gpd
 
 def normalize_coordinates(lon, lat):
     assert -90 < lat < 90, "Expected latitude in [-90:90], got {!s} instead".format(lat)
-    assert -180< lon< 360, "Expected longitude in [-180:360], got {!s} instead".format(lon)
+    assert -180<=lon<=360, "Expected longitude in [-180:360], got {!s} instead".format(lon)
     if lon > 180:
         lon -= 360
     return [lon, lat]
@@ -24,10 +24,13 @@ def format_doc(row):
     I.e, GeoPandas row into dictionary according to db schema
     """
     point = row.geometry.centroid
-    doc = {
-        'name': normalize_string(row['name']),
-        'coordinates':normalize_coordinates(point.x, point.y)
-        }
+    try:
+        doc = {
+            'name': normalize_string(row['name']),
+            'coordinates':normalize_coordinates(point.x, point.y)
+            }
+    except:
+        doc = None
     return doc
 
 def format_collection(body, docs):
@@ -45,7 +48,14 @@ def main(geojson):
     """
     body = os.path.splitext(os.path.basename(geojson))[0]
     gdf = read_features(geojson)
-    docs = gdf.apply(format_doc, axis=1).to_list()
+    gs = gdf.apply(format_doc, axis=1)
+    if gs.isnull().any():
+        print("There are wrong coordinates in {!s} causing null entries in the output.".format(geojson))
+        gs.dropna(inplace=True)
+        if not len(gs):
+            print("In fact, {!s} has no valid feature. Output is null.")
+            return None
+    docs = gs.to_list()
     collection = format_collection(body, docs)
     return collection
 
