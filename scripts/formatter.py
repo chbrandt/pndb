@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import json
 import geopandas as gpd
 
@@ -27,18 +29,14 @@ def format_doc(row):
     try:
         doc = {
             'name': normalize_string(row['name']),
-            'coordinates':normalize_coordinates(point.x, point.y)
+            'location': {
+                'type': "Point",
+                'coordinates':normalize_coordinates(point.x, point.y)
+            }
             }
     except:
         doc = None
     return doc
-
-def format_collection(body, docs):
-    collection = {
-        'body': normalize_string(body),
-        'locations': docs
-        }
-    return collection
 
 def main(geojson):
     """
@@ -56,8 +54,12 @@ def main(geojson):
             print("In fact, {!s} has no valid feature. Output is null.")
             return None
     docs = gs.to_list()
-    collection = format_collection(body, docs)
-    return collection
+
+    # Add 'body' to each document
+    for d in docs:
+        d.update({'body': normalize_string(body)})
+
+    return docs
 
 if __name__ == "__main__":
     import os

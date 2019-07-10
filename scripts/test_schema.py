@@ -17,4 +17,11 @@ def test_schema(json_filename='example_collection.json'):
 if __name__ == "__main__":
     import sys
     assert len(sys.argv) > 1, "You're supposed to give a json filename as argument"
-    test_schema(sys.argv[1])
+
+    filename = sys.argv[1]
+    print("Testing", filename)
+
+    ok = test_schema(filename)
+    
+    if ok:
+        print("..OK")

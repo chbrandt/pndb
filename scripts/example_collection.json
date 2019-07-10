@@ -1,13 +1,18 @@
-{
+[
+  {
+    "name":  "swift",
     "body":  "deimos",
-    "locations": [
-        {
-            "name":  "swift",
-            "coordinates":  [1.8, 12.5]
-        },
-        {
-            "name":  "voltaire",
-            "coordinates":  [356.5, 20]
-        }
-    ]
-}
+    "location": {
+      "type": "Point",
+      "coordinates": [1.8, 12.5]
+    }
+  },
+  {
+    "name":  "voltaire",
+    "body":  "deimos",
+    "location": {
+      "type": "Point",
+      "coordinates": [356.5, 20]
+    }
+  }
+]

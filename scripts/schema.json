@@ -1,20 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
-  "required": ["body","locations"],
-  "type": "object",
-  "properties": {
-    "body": {
-      "type": "string"
-    },
-    "locations": {
-      "type": "array",
-      "items": [
-        {
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "required": ["body","name","location"],
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
           "type": "object",
           "properties": {
-            "name": {
-              "type": "string"
+            "type": {
+              "type": "string",
+              "enum": ["Point"]
             },
             "coordinates": {
               "type": "array",
@@ -35,7 +39,7 @@
             }
           }
         }
-      ]
+      }
     }
-  }
+  ]
 }
