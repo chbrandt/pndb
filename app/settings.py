@@ -1,22 +1,40 @@
+# ================================================================
+# MongoDB
+# -------
+# Server
+#
 MONGO_HOST = 'mongodb+srv://planmap-nmnye.mongodb.net'
 MONGO_PORT = 27017
-
-# Skip this block if your db has no auth. But it really should.
+# If there is one, user authentication.
+#
 MONGO_USERNAME = 'planmap'
 MONGO_PASSWORD = 'h2020'
-# Name of the database on which the user can be authenticated,
-# needed if --auth mode is enabled.
+# Database for user authentication (if --auth mode is enabled)
+#
 MONGO_AUTH_SOURCE = 'admin'
-
+# Database where data collection(s) to be served is(are)
+#
 MONGO_DBNAME = 'nomenclature'
+# ================================================================
 
-crater = {
-    'hateoas': False,
-    'item_title': 'crater centroid',
-    'url': 'centroid/<regex("[\w]+"):body>/<regex("[\w ]+"):name>',
+# ================================================================
+# Results
+# -------
+# Disable results pagination (default is 25 documents)
+#
+PAGINATION = False
+# Hypermedia as the Engine of Application State
+#
+HATEOAS = False
+# ================================================================
+
+
+centroids = {
+    'item_title': 'centroid',
+    # 'url': 'centroid/<regex("[\w]+"):body>/<regex("[\w ]+"):name>',
+    # 'url': 'centroid/<regex("[\w]+"):body>',
     'datasource': {
-        'projection': {'name': 1, 'body': 1, 'location.coordinates': 1,
-            '_id': 0, '_created': 0, '_updated': 0, '_etag': 0}
+        'projection': {'name': 1, 'body': 1, 'location.coordinates': 1}
     }
 }
 
@@ -26,5 +44,5 @@ crater = {
 # }
 
 DOMAIN = {
-    'centroids': crater,
+    'centroids': centroids
 }
