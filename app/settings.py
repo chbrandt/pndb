@@ -31,10 +31,21 @@ HATEOAS = False
 
 centroids = {
     'item_title': 'centroid',
-    # 'url': 'centroid/<regex("[\w]+"):body>/<regex("[\w ]+"):name>',
-    # 'url': 'centroid/<regex("[\w]+"):body>',
+    'url': 'centroid/<regex("[\w]+"):body>/<regex("[\w ]+"):name>',
     'datasource': {
+        'source': 'centroids',
         'projection': {'name': 1, 'body': 1, 'location.coordinates': 1}
+    }
+}
+
+bodies = {
+    'datasource': {
+        'source': 'centroids',
+        'aggregation': {
+            'pipeline': [
+                {"$group": {"_id": "$body"}},
+            ]
+        },
     }
 }
 
@@ -44,5 +55,6 @@ centroids = {
 # }
 
 DOMAIN = {
-    'centroids': centroids
+    'centroids': centroids,
+    'bodies': bodies
 }
