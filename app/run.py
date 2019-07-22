@@ -67,10 +67,17 @@ _SEARCH_PAGE_ = """
             </div>
           </form>
         </div>
-        {% if result %}
-            <hr/>
-            {{ result }}
-            <hr/>
+        {% if results %}
+        <table class="table text-center">
+            <tbody>
+          {% for result in results %}
+            <tr>
+              <th>{{result.0}}</th>
+              <th style="text-align:right">{{result.1}}</th>
+            </tr>
+          {% endfor %}
+            </tbody>
+        </table>
         {% endif %}
       </div>
     </div>
@@ -89,8 +96,8 @@ def search():
             r = requests.get(url)
             if r.status_code == 200:
                 js = r.json()
-                # results = [d['name'] for d in js['_items']]
-        return render_template_string(_SEARCH_PAGE_, result=js)
+                results = [(d['body'],d['name']) for d in js['_items']]
+        return render_template_string(_SEARCH_PAGE_, results=results)
     return render_template_string(_SEARCH_PAGE_)
 
 # @app.route('/centroid/<string:body>/<string:name>')
