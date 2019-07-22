@@ -70,10 +70,39 @@ centroid_lonlat_get = {
     }
 }
 
+# text_search = {
+#     'url': '/bla/',
+#     'datasource': {
+#         'source': 'centroids',
+#         'aggregation': {
+#             'pipeline': [
+#                 {"$group": {"_id": "$body"}},
+#                 {"$sort": {"_id": 1}},
+#                 {"$project": {"_id": 0, "body": "$_id"}}
+#             ]
+#         },
+#     #     'aggregation': {
+#     #         'pipeline': [
+#     #             {"$match": {"$text": {"$search": "$input"}}},
+#     #         ]
+#         # },
+#     }
+# }
 
 DOMAIN = {
-    'bodies': bodies_list,
-    'centroids': centroids_list,
-    'centroid': centroid_get,
-    'centroid_ll': centroid_lonlat_get,
+    'bodies_list': bodies_list,
+    'centroids_list': centroids_list,
+    'centroid_get': centroid_get,
+    'centroid_ll_get': centroid_lonlat_get,
+    'centroids': {
+        'datasource': {
+            'aggregation': {
+                'pipeline': [
+                    {"$match": {"$text": {"$search": "$value"}}},
+                    # {"$group": {"_id": "$body"}},
+                    # {"$sort": {"_id": 1, "name": 1}},
+                    # {"$project": {"_id": 0, "body": "$_id"}}
+                ]
+            }
+        }},
 }
