@@ -28,6 +28,5 @@ $ python app/run.py
 # Dependencies
 This app is built on:
 
-* [Eve](python-eve.org)
-  * [Flask](https://palletsprojects.com/p/flask/)
+* [Eve](python-eve.org) / [Flask](https://palletsprojects.com/p/flask/)
 * [MongoDB](https://www.mongodb.com/)
