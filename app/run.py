@@ -12,7 +12,7 @@ def on_fetched_resource(resource, response):
         del(doc['_created'])
         del(doc['_updated'])
         del(doc['_etag'])
-# app.on_fetched_resource += on_fetched_resource
+app.on_fetched_resource += on_fetched_resource
 
 def on_fetched_resource_lonlat(response):
     for doc in response['_items']:
@@ -79,14 +79,18 @@ _SEARCH_PAGE_ = """
             <thead>
                 <tr>
                     <th>Body</th>
-                    <th style="text-align:right">Feature</th>
+                    <th>Features</th>
+                    <th style="text-align:right">Lon</th>
+                    <th style="text-align:right">Lat</th>
                 <tr>
             </thead>
             <tbody>
             {% for result in results %}
                 <tr>
                   <th>{{result.0}}</th>
-                  <th style="text-align:right">{{result.1}}</th>
+                  <th>{{result.1}}</th>
+                  <th style="text-align:right">{{result.2}}</th>
+                  <th style="text-align:right">{{result.3}}</th>
                 </tr>
             {% endfor %}
             </tbody>
@@ -104,13 +108,16 @@ def search():
         text = request.form.get('input', None)
         results = []
         if text:
-            agg_query = '"$value":"{!s}"'.format(text)
+            text_and = ' '.join(['\\"{}\\"'.format(s) for s in text.split()])
+            agg_query = '"$value":"{!s}"'.format(text_and)
             agg_query = 'aggregate={'+agg_query+'}'
             url = request.url_root + 'centroids?' + agg_query
             r = requests.get(url)
             if r.status_code == 200:
                 js = r.json()
-                results = [(d['body'],d['name']) for d in js['_items']]
+                for d in js['_items']:
+                    c = d['location'].get('coordinates')
+                    results.append((d['body'],d['name'],c[0],c[1]))
         return render_template_string(_SEARCH_PAGE_, results=results)
     return render_template_string(_SEARCH_PAGE_)
 
