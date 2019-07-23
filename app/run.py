@@ -40,10 +40,16 @@ _SEARCH_PAGE_ = """
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
   </head>
 
   <body>
-    <div class="container" style="margin-top: 8%;">
+    <div class="container" style="padding-top: 8%; width:100%; height:100%">
       <div class="col-md-6 col-md-offset-3">
         <div class="row">
           <div id="logo" class="text-center">
@@ -69,6 +75,12 @@ _SEARCH_PAGE_ = """
         </div>
         {% if results %}
         <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Body</th>
+                    <th style="text-align:right">Feature</th>
+                <tr>
+            </thead>
             <tbody>
           {% for result in results %}
             <tr>
