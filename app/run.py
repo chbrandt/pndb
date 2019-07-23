@@ -25,7 +25,7 @@ app.on_fetched_resource_centroid_ll += on_fetched_resource_lonlat
 def on_aggregate(endpoint, pipeline):
     print(endpoint)
     print(pipeline)
-app.before_aggregation += on_aggregate
+# app.before_aggregation += on_aggregate
 
 
 _SEARCH_PAGE_ = """
@@ -53,14 +53,17 @@ _SEARCH_PAGE_ = """
 <body>
   <div class="container" style="width:100%; height:100%">
     <div class="row text-right" style="height:50px; padding-right:5%; padding-top:10px">
-      <button type="button" class="btn" data-toggle="modal" data-target="#flipFlop">
-        <i class="far fa-question-circle fa-2x" style="color:gray"></i>
+      <button type="button" class="btn btn-default" style="border:0"
+        data-toggle="modal" data-target="#info">
+            <i class="far fa-question-circle fa-2x" style="color:gray"></i>
       </button>
     </div>
     <div class="col-md-6 col-md-offset-3">
       <div class="row">
         <div id="logo" class="text-center">
+            <a href="{{hosturl}}">
           <img src="https://stories.planmap.eu/img/logo-planmap.jpg" alt="" height="72">
+            </a>
           <hr style="border:0" />
           <!--
             <h5><small>About</small></h5>
@@ -107,7 +110,7 @@ _SEARCH_PAGE_ = """
   </div>
   <!-- Modal -->
   <!-- From https://www.quackit.com/bootstrap/bootstrap_3/tutorial/bootstrap_modal.cfm -->
-  <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal fade" id="info" href="#info" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -152,6 +155,14 @@ _SEARCH_PAGE_ = """
   </div>
 </body>
 
+<script>
+    $(document).ready(function() {
+      if(window.location.href.indexOf('#info') != -1) {
+        $('#info').modal('show');
+      }
+    });
+</script>
+
 </html>"""
 @app.route('/search', methods=['GET','POST'])
 def search():
@@ -179,4 +190,4 @@ def home_page():
 
 
 if __name__ == '__main__':
-    app.run(threaded=True, debug=True)
+    app.run(threaded=True, debug=False)
