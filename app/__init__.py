@@ -189,5 +189,3 @@ def home_page():
     return redirect(url_for('search'))
 
 
-if __name__ == '__main__':
-    app.run(threaded=True, debug=False)
