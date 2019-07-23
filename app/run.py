@@ -1,5 +1,5 @@
 import requests
-from flask import request, render_template_string
+from flask import request, render_template_string, redirect, url_for
 from eve import Eve
 
 app = Eve()
@@ -79,7 +79,7 @@ _SEARCH_PAGE_ = """
             <thead>
                 <tr>
                     <th>Body</th>
-                    <th>Features</th>
+                    <th>Feature</th>
                     <th style="text-align:right">Lon</th>
                     <th style="text-align:right">Lat</th>
                 <tr>
@@ -111,7 +111,7 @@ def search():
             text_and = ' '.join(['\\"{}\\"'.format(s) for s in text.split()])
             agg_query = '"$value":"{!s}"'.format(text_and)
             agg_query = 'aggregate={'+agg_query+'}'
-            url = request.url_root + 'centroids?' + agg_query
+            url = request.url_root + 'api/centroids?' + agg_query
             r = requests.get(url)
             if r.status_code == 200:
                 js = r.json()
@@ -121,12 +121,9 @@ def search():
         return render_template_string(_SEARCH_PAGE_, results=results)
     return render_template_string(_SEARCH_PAGE_)
 
-# @app.route('/centroid/<string:body>/<string:name>')
-# def centroid_by_name(body, name):
-#     url = '?'.join([request.url_root+'centroids',
-#                     'where={"body":"'+body+'","name":"'+name+'"}'])
-#     r = requests.get(url)
-#     return r.json()
+@app.route('/')
+def home_page():
+    return redirect(url_for('search'))
 
 
 if __name__ == '__main__':

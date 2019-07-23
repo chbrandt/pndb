@@ -26,6 +26,9 @@ PAGINATION = False
 # Hypermedia as the Engine of Application State
 #
 HATEOAS = False
+# URL prefix for (all) endpoints
+#
+URL_PREFIX='api'
 # ================================================================
 
 
@@ -63,37 +66,19 @@ centroid_get = {
 
 centroid_lonlat_get = {
     'item_title': 'centroid',
-    'url': 'centroids/<regex("[\w]+"):body>/<regex("[\w ]+"):name>/lonlat',
+    'url': 'centroids/<regex("[\w]+"):body>/<regex("[\w ]+"):name>/flat',
     'datasource': {
         'source': 'centroids',
         'projection': {'name': 1, 'body': 1, 'location': 1}
     }
 }
 
-# text_search = {
-#     'url': '/bla/',
-#     'datasource': {
-#         'source': 'centroids',
-#         'aggregation': {
-#             'pipeline': [
-#                 {"$group": {"_id": "$body"}},
-#                 {"$sort": {"_id": 1}},
-#                 {"$project": {"_id": 0, "body": "$_id"}}
-#             ]
-#         },
-#     #     'aggregation': {
-#     #         'pipeline': [
-#     #             {"$match": {"$text": {"$search": "$input"}}},
-#     #         ]
-#         # },
-#     }
-# }
 
 DOMAIN = {
     'bodies_list': bodies_list,
     'centroids_list': centroids_list,
-    'centroid_get': centroid_get,
-    'centroid_ll_get': centroid_lonlat_get,
+    'centroid': centroid_get,
+    'centroid_ll': centroid_lonlat_get,
     'centroids': {
         'datasource': {
             'aggregation': {
