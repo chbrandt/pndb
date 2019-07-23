@@ -18,3 +18,16 @@ The endpoints, organized by body name, are listed in:
 
 More information, and also examples, about nomenclature can be found at:
 * https://astrocloud.wr.usgs.gov/dataset/docs/index.html
+
+## Developers / SysAdmins
+To run the app:
+```bash
+$ python app/run.py
+```
+
+# Dependencies
+This app is built on:
+
+* [Eve](python-eve.org)
+  * [Flask](https://palletsprojects.com/p/flask/)
+* [MongoDB](https://www.mongodb.com/)
