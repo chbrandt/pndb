@@ -74,6 +74,7 @@ _SEARCH_PAGE_ = """
           </form>
         </div>
         {% if results %}
+        <div style="width:70%" class="center-block">
         <table class="table text-center">
             <thead>
                 <tr>
@@ -82,14 +83,15 @@ _SEARCH_PAGE_ = """
                 <tr>
             </thead>
             <tbody>
-          {% for result in results %}
-            <tr>
-              <th>{{result.0}}</th>
-              <th style="text-align:right">{{result.1}}</th>
-            </tr>
-          {% endfor %}
+            {% for result in results %}
+                <tr>
+                  <th>{{result.0}}</th>
+                  <th style="text-align:right">{{result.1}}</th>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
+        </div>
         {% endif %}
       </div>
     </div>

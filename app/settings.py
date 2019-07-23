@@ -100,7 +100,7 @@ DOMAIN = {
                 'pipeline': [
                     {"$match": {"$text": {"$search": "$value"}}},
                     # {"$group": {"_id": "$body"}},
-                    # {"$sort": {"_id": 1, "name": 1}},
+                    {"$sort": {"body": 1, "name": 1}},
                     # {"$project": {"_id": 0, "body": "$_id"}}
                 ]
             }
