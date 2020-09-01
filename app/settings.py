@@ -3,7 +3,7 @@
 # -------
 # Server
 #
-MONGO_HOST = 'mongodb+srv://planmap-nmnye.mongodb.net'
+MONGO_HOST = 'mongodb+srv://planmap.nmnye.mongodb.net'
 MONGO_PORT = 27017
 # If there is one, user authentication.
 #
