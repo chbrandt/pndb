@@ -7,8 +7,8 @@ MONGO_HOST = 'mongodb+srv://planmap.nmnye.mongodb.net'
 MONGO_PORT = 27017
 # If there is one, user authentication.
 #
-MONGO_USERNAME = 'planmap'
-MONGO_PASSWORD = 'h2020'
+MONGO_USERNAME = 'pndb'
+MONGO_PASSWORD = 'pndb'
 # Database for user authentication (if --auth mode is enabled)
 #
 MONGO_AUTH_SOURCE = 'admin'

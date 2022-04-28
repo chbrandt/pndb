@@ -62,7 +62,7 @@ _SEARCH_PAGE_ = """
       <div class="row">
         <div id="logo" class="text-center">
             <a href="{{hosturl}}">
-          <img src="https://stories.planmap.eu/img/logo-planmap.jpg" alt="" height="72">
+          <img src="https://raw.githubusercontent.com/planmap-eu/storymaps/master/app/public/img/cr-logo.png" alt="" height="72">
             </a>
           <hr style="border:0" />
           <!--
@@ -72,7 +72,7 @@ _SEARCH_PAGE_ = """
         <form role="form" id="form-buscar" method="POST" action="/search">
           <div class="form-group">
             <div class="input-group">
-              <input id="input" class="form-control" type="text" name="input" placeholder="Search..." required />
+              <input id="input" class="form-control" type="text" name="input" placeholder="Search for body or features, e.g. 'moon' or 'mars chaos'" required />
               <span class="input-group-btn">
                 <button class="btn btn-success" type="submit">
                   <i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search
